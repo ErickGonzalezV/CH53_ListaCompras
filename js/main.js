@@ -169,8 +169,8 @@ btnClear.addEventListener("click", function(event){
         txtNumber.value = ""; //Quita el valor si estuviera escrito
 
         // Redefino precio, productosTotal y contadorProductos para que see muestren en 0
-        precioTotal.innerText = "$ 0.00 ";
-        productosTotal.innerText = totalEnProductos;
-        contadorProductos.innerText = cont;
+        precioTotal.innerText = "$ 0.00 "; // Se muestra $0,00
+        productosTotal.innerText = totalEnProductos; //Hace que productosTotal tome el valor de totalEnProductos (para mostrar 0)
+        contadorProductos.innerText = cont; //Hace que contadorProductos tome el valor de cont que reasignamos en linea 160 para mostrar 0.
 
 });
