@@ -6,6 +6,8 @@ const alertValidaciones = document.getElementById("alertValidaciones");
 const tablaListaCompras = document.getElementById("tablaListaCompras");
 const cuerpoTabla = tablaListaCompras.getElementsByTagName("tbody").item(0);
 
+const btnClear = document.getElementById("btnClear"); //Declaramos el boton clear.
+
 const contadorProductos = document.getElementById("contadorProductos");
 const productosTotal = document.getElementById("productosTotal");
 const precioTotal = document.getElementById("precioTotal");
@@ -138,3 +140,38 @@ productosTotal.innerText = totalEnProductos;
 contadorProductos.innerText = cont;
 }); //window.addEventListenet load
 
+//Agregar la funcionalidad del botón limpiar
+// Borrar local storage
+// Borrar alertas
+// Borrar productos en tablas
+// Borrar campos
+// Borrar Resumen
+
+
+
+btnClear.addEventListener("click", function(event){
+    event.preventDefault();
+        //uso remove Item en lugar de clear porque no se si despues se agregara mas informacion que no querramos borrar
+        // Solo queremos borrar datos y resumen del local storage
+        localStorage.removeItem("datos");
+        localStorage.removeItem("resumen");
+    
+        cuerpoTabla.innerHTML = ""; //Re asigno esta variable para que muestre un espacio vacio
+        datos = [];//Re asignamos el arreglo para que se muestre vacio
+        cont = 0;//Reseteo contador a 0
+        costoTotal = 0;//Reseteo costo total a 0
+        totalEnProductos = 0;//Reseteo total en productos a 0.
+        //Estas 6 lineas limpian el borde y la alerta, asi como el nombre y numero.
+        alertValidacionesTexto.innerHTML = "";
+        alertValidaciones.style.display = "none"; // Pa que no se muestre la alerta en caso de haber.
+        txtName.style.border = ""; //Quita borde de Name.
+        txtNumber.style.border = ""; //Quita borde de cantidad.
+        txtName.value = ""; //Quita nombre si estuvieran escritos
+        txtNumber.value = ""; //Quita el valor si estuviera escrito
+
+        // Redefino precio, productosTotal y contadorProductos para que see muestren en 0
+        precioTotal.innerText = "$ ";
+        productosTotal.innerText = totalEnProductos;
+        contadorProductos.innerText = cont;
+
+});
