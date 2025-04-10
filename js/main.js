@@ -12,10 +12,10 @@ const precioTotal = document.getElementById("precioTotal");
 
 
 //Numeración de la primera columna de la tabla
-let cont = 0;
-let costoTotal =0;
-let totalEnProductos = 0;
-
+let cont = 0; // Contador que se usa para la tabla y para la badge roja
+let costoTotal =0; //Variable que muestra el total de productos ya sumado
+let totalEnProductos = 0; //Variable que mostrara el total de productos
+let datos = new Array(); // Almacena los elementos de la tabla
 
 
 function validarCantidad(){
@@ -78,6 +78,18 @@ if(isValid){ //si pasó las validaciones de nombre y numero, hace esto
                 <td>${txtNumber.value}</td>
                 <td>${precio}</td>
                 </tr>`; //se toma el contador, el name, number y el precio
+    let elemento = {
+                    "cont" : cont,
+                    "nombre" : txtName.value,
+                    "cantidad" : txtNumber.value,
+                    "precio" : precio
+                    }; //crea el elemento JSON con el contador, nombre, cantidad y precio
+
+    datos.push(elemento); 
+
+    localStorage.setItem("datos", JSON.stringify(datos)); //guarda como string el json en el localstorage
+
+
     cuerpoTabla.insertAdjacentHTML("beforeend", row); //Esto agrega la fila al final de los elementos actuales de la tabla
     costoTotal += precio * Number(txtNumber.value);
     precioTotal.innerText = "$ " + costoTotal.toFixed(2);
@@ -85,14 +97,44 @@ if(isValid){ //si pasó las validaciones de nombre y numero, hace esto
     productosTotal.innerText = totalEnProductos;
     contadorProductos.innerText = cont;
     
-    
-    
-    
+    let resumen = {
+        "cont" : cont,
+        "totalEnProductos" : totalEnProductos,
+        "costoTotal" : costoTotal,
+                    }; //crea el elemento JSON con los totales y el contador
+
+        localStorage.setItem("resumen", JSON.stringify(resumen)); //Guarda como string el json en el localStorage NOTA: se hace despues de asignados los valores, ya que sino nos daria 0
     
     txtName.value = "";
     txtNumber.value ="";
     txtName.focus();
 }//if isValid
+});//btnAgregar.addEventListener
+
+window.addEventListener("load", function(event){
+    event.preventDefault();
+    if(this.localStorage.getItem("datos") !=null){
+    datos = JSON.parse(this.localStorage.getItem("datos"));
+}//datos != null
+datos.forEach((d) =>{
+    let row = `<tr>
+                    <td>${d.cont}</td>
+                    <td>${d.nombre}</td>
+                    <td>${d.cantidad}</td>
+                    <td>${d.precio}</td>    
+                </tr>`;
+    cuerpoTabla.insertAdjacentHTML("beforeend", row);
+})
 
 
-});//btnAgregar
+    if(this.localStorage.getItem("resumen") !=null){
+        let resumen = JSON.parse(this.localStorage.getItem("resumen"));
+        costoTotal = resumen.costoTotal;
+        totalEnProductos = resumen.totalEnProductos;
+        cont = resumen.cont;
+}//resumen != null
+precioTotal.innerText = "$ " + costoTotal.toFixed(2);
+productosTotal.innerText = totalEnProductos;
+contadorProductos.innerText = cont;
+}); //window.addEventListenet load
+
