@@ -157,7 +157,6 @@ btnClear.addEventListener("click", function(event){
         localStorage.removeItem("resumen");
     
         cuerpoTabla.innerHTML = ""; //Re asigno esta variable para que muestre un espacio vacio
-        datos = [];//Re asignamos el arreglo para que se muestre vacio
         cont = 0;//Reseteo contador a 0
         costoTotal = 0;//Reseteo costo total a 0
         totalEnProductos = 0;//Reseteo total en productos a 0.
@@ -170,7 +169,7 @@ btnClear.addEventListener("click", function(event){
         txtNumber.value = ""; //Quita el valor si estuviera escrito
 
         // Redefino precio, productosTotal y contadorProductos para que see muestren en 0
-        precioTotal.innerText = "$ ";
+        precioTotal.innerText = "$ 0.00 ";
         productosTotal.innerText = totalEnProductos;
         contadorProductos.innerText = cont;
 
